@@ -14,8 +14,16 @@ class AckInProject::SearchResults
       :page_title   => title,
       :html_head    => header_extra()
     )
+    note = case plist['ackFileType']
+      when 'Normal'
+        ''
+      when 'All'
+        ' (all types)'
+      else
+        ' ('+plist['ackFileType']+' only)'
+      end
     puts <<-HTML
-      <h2>Searching for “#{ h search_string }” in #{ searched_in }#{plist['ackFileType'] == 'All' ? '' : (' ('+plist['ackFileType']+' only)')}</h2>
+      <h2>Searching for “#{ h search_string }” in #{ searched_in }#{note}</h2>
       <div id="counters"><span id="linecount">0 lines</span> matched in <span id="filecount">0 files</span></div>
       <script type="text/javascript">searchStarted();</script>
       <table id="results" width="100%" cellspacing="0">

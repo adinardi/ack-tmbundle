@@ -29,7 +29,7 @@ class AckInProject::SearchDialog
       'ackExpression' => AckInProject.pbfind,
       'ackHistory' => AckInProject.search_history,
       'ackFileTypes' => filetypes,
-      'ackFileType' => 'All'
+      'ackFileType' => 'Normal'
     }
   end
   
@@ -44,55 +44,8 @@ class AckInProject::SearchDialog
   end
   
   def filetypes
-    # I'm sure there's a better way to do this. But I'm not familiar with it.
-    [
-      {'filetype'=>'All'},
-      {'filetype'=>'actionscript'},
-      {'filetype'=>'asm'},
-      {'filetype'=>'batch'},
-      {'filetype'=>'binary'},
-      {'filetype'=>'cc'},
-      {'filetype'=>'cfmx'},
-      {'filetype'=>'cpp'},
-      {'filetype'=>'csharp'},
-      {'filetype'=>'css'},
-      {'filetype'=>'elisp'},
-      {'filetype'=>'erlang'},
-      {'filetype'=>'fortran'},
-      {'filetype'=>'haskell'},
-      {'filetype'=>'hh'},
-      {'filetype'=>'html'},
-      {'filetype'=>'java'},
-      {'filetype'=>'js'},
-      {'filetype'=>'jsp'},
-      {'filetype'=>'lisp'},
-      {'filetype'=>'lua'},
-      {'filetype'=>'make'},
-      {'filetype'=>'mason'},
-      {'filetype'=>'objc'},
-      {'filetype'=>'objcpp'},
-      {'filetype'=>'ocaml'},
-      {'filetype'=>'parrot'},
-      {'filetype'=>'perl'},
-      {'filetype'=>'php'},
-      {'filetype'=>'plone'},
-      {'filetype'=>'python'},
-      {'filetype'=>'rake'},
-      {'filetype'=>'ruby'},
-      {'filetype'=>'scheme'},
-      {'filetype'=>'shell'},
-      {'filetype'=>'skipped'},
-      {'filetype'=>'smalltalk'},
-      {'filetype'=>'sql'},
-      {'filetype'=>'tcl'},
-      {'filetype'=>'tex'},
-      {'filetype'=>'text'},
-      {'filetype'=>'tt'},
-      {'filetype'=>'vb'},
-      {'filetype'=>'vim'},
-      {'filetype'=>'xml'},
-      {'filetype'=>'yaml'}
-    ]
+    # I'm sure there's a better way to pass these to the NIB than an array of objects... but I'm not familiar with it.
+    %x{#{e_sh ack} --help=types}.scan(/--\[no\]([^ ]+)/).unshift(['Normal'], ['All']).map{ |type_array| {'filetype'=>type_array[0],} }
   end
 end
 
