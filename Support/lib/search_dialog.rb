@@ -1,3 +1,7 @@
+# NOTE: To get values put into plist['result'], they need to be put into the bindings for the "Find"
+# button. *Including* the "Selector Name" for "Target".
+# This is probably intuitive to experienced Cocoa programmers. I am not one. ~David
+
 class AckInProject::SearchDialog
   include AckInProject::Environment
   AckInProject::Environment.ghetto_include %w(web_preview), binding
@@ -18,7 +22,7 @@ class AckInProject::SearchDialog
     %w(
       ackMatchWholeWords ackIgnoreCase ackLiteralMatch 
       ackShowContext ackFollowSymlinks ackLoadAckRC
-    ).inject({}) do |hsh,v|
+    ).inject({'ackFileType'=>'Normal'}) do |hsh,v|
       hsh[v] = false
       hsh
     end
@@ -29,7 +33,6 @@ class AckInProject::SearchDialog
       'ackExpression' => AckInProject.pbfind,
       'ackHistory' => AckInProject.search_history,
       'ackFileTypes' => filetypes,
-      'ackFileType' => 'Normal'
     }
   end
   

@@ -88,15 +88,13 @@ class AckInProject::Search
     options << "--#{result['followSymLinks'] == 1 ? '' : 'no'}follow"
     options << "--#{result['loadAckRC'] == 1 ? '' : 'no'}env"
     
-    # I don't know why ackFileType doesn't go into result. I am an Interface Builder n00b.
-    # (putting it into defaults instead of params didn't change anything) ~David
-    options << case plist['ackFileType']
+    options << case result['ackFileType']
       when 'Normal'
         ''
       when 'All'
         '--all-types'
       else
-        '--type='+plist['ackFileType']
+        '--type='+result['ackFileType']
       end
     
     AckInProject.update_search_history result['returnArgument']
