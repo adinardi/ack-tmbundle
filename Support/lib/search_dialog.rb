@@ -25,11 +25,11 @@ class AckInProject::SearchDialog
   end
   
   def params
-    history = AckInProject.search_history
     {
-      #'contentHeight' => 168,
       'ackExpression' => AckInProject.pbfind,
-      'ackHistory' => history
+      'ackHistory' => AckInProject.search_history,
+      'ackFileTypes' => filetypes,
+      'ackFileType' => 'All'
     }
   end
   
@@ -41,6 +41,58 @@ class AckInProject::SearchDialog
       <h1>Can't determine project directory (TM_PROJECT_DIR)</h1>
     </body></html>
     HTML
+  end
+  
+  def filetypes
+    # I'm sure there's a better way to do this. But I'm not familiar with it.
+    [
+      {'filetype'=>'All'},
+      {'filetype'=>'actionscript'},
+      {'filetype'=>'asm'},
+      {'filetype'=>'batch'},
+      {'filetype'=>'binary'},
+      {'filetype'=>'cc'},
+      {'filetype'=>'cfmx'},
+      {'filetype'=>'cpp'},
+      {'filetype'=>'csharp'},
+      {'filetype'=>'css'},
+      {'filetype'=>'elisp'},
+      {'filetype'=>'erlang'},
+      {'filetype'=>'fortran'},
+      {'filetype'=>'haskell'},
+      {'filetype'=>'hh'},
+      {'filetype'=>'html'},
+      {'filetype'=>'java'},
+      {'filetype'=>'js'},
+      {'filetype'=>'jsp'},
+      {'filetype'=>'lisp'},
+      {'filetype'=>'lua'},
+      {'filetype'=>'make'},
+      {'filetype'=>'mason'},
+      {'filetype'=>'objc'},
+      {'filetype'=>'objcpp'},
+      {'filetype'=>'ocaml'},
+      {'filetype'=>'parrot'},
+      {'filetype'=>'perl'},
+      {'filetype'=>'php'},
+      {'filetype'=>'plone'},
+      {'filetype'=>'python'},
+      {'filetype'=>'rake'},
+      {'filetype'=>'ruby'},
+      {'filetype'=>'scheme'},
+      {'filetype'=>'shell'},
+      {'filetype'=>'skipped'},
+      {'filetype'=>'smalltalk'},
+      {'filetype'=>'sql'},
+      {'filetype'=>'tcl'},
+      {'filetype'=>'tex'},
+      {'filetype'=>'text'},
+      {'filetype'=>'tt'},
+      {'filetype'=>'vb'},
+      {'filetype'=>'vim'},
+      {'filetype'=>'xml'},
+      {'filetype'=>'yaml'}
+    ]
   end
 end
 
