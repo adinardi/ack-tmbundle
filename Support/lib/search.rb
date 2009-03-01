@@ -26,7 +26,8 @@ class AckInProject::Search
   def section_start(file)
     self.current_file = file
     reset_stripe
-    puts %Q|<tr><th colspan="2">#{current_file}<script>f();</script></th></tr>|
+    puts %Q|<table class="file" width="100%" cellspacing="0">|
+    puts %Q|<thead class="filename"><tr><th colspan="2">#{current_file}<script>f();</script></th></tr></thead>|
     puts %Q|<tbody class="matches">|
     file_matched()
   end
@@ -35,6 +36,7 @@ class AckInProject::Search
     if current_file
       puts %Q|<tr><td>&nbsp;</td><td>&nbsp;</td></tr>|
       puts %Q|</tbody>|
+      puts %Q|</table>|
     end
     self.current_file = nil
   end
