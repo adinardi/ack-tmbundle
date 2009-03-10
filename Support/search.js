@@ -1,5 +1,6 @@
 var foundFiles = 0;
 var foundLines = 0;
+var folds;
 
 function $(el) {
   return document.getElementById(el);
@@ -17,73 +18,76 @@ function l() {
 
 function searchStarted() {
   $('teaser').style.display = 'none';
+  folds = new FoldSupport();
+}
+
+function searchResultAdded(id) {
+  folds.setupFoldingIn($(id));
 }
 
 function searchCompleted() {
   $('teaser').style.display = 'block';
-  new FoldSupport();
-  // $('fold').style.display = 'block';
-  // $('fold-toggle').addEventListener('change', function() {
-  //   $('fold-lbl').innerHTML = "Unfold results";
-  // }, false);
+  folds.searchComplete();
 }
 
 function FoldSupport() {
   this.container = $('fold');
   this.checkbox  = $('fold-toggle');
   this.label     = $('fold-lbl');
-  this.results   = document.querySelectorAll('.file');
-  console.log(this.results.length); 
-  this.toggle();
-  this.setupObservers();
 }
 
 FoldSupport.prototype = {
+  searchComplete: function() {
+    this.results = document.querySelectorAll('.file');
+    this.toggle();
+    this.setupObservers();
+  },
+  
   toggle: function() {
-    if(this.container.style.display == 'none')
+    if(this.container.style.display == 'none') {
       this.container.style.display = 'block';
-    else
+    } else {
       this.container.style.display = 'none';
+    }
+  },
+  
+  foldAll: function(fold) {
+    var display = 'none';
+    if(fold) { display = 'block'; }
+    for (var i=0; i < this.results.length; i++) {
+      var file = this.results[i];
+      var matches = file.getElementsByTagName('tbody')[0];
+      matches.style.display = display;
+    };
   },
   
   setupObservers: function() {
     this.setupMainFolding();
-    this.setupTableFolding();
   },
-  
   
   setupMainFolding: function() {
     var self = this;
     this.checkbox.addEventListener('change', function() {
-      var lbl = self.label.innerHTML, display;
+      var lbl = self.label.innerHTML;
       if(lbl.indexOf('Unfold') == -1) {
-        display = 'none';
         self.label.innerHTML = 'Unfold Results';
       } else {
-        display = 'block';
         self.label.innerHTML = 'Fold results';
       }
-    
-      for (var i=0; i < self.results.length; i++) {
-        var file = self.results[i];
-        var matches = file.getElementsByTagName('tbody')[0];
-        matches.style.display = display;
-      };
+      
+      self.foldAll(lbl.indexOf('Unfold') != -1);
     }, false);
   },
   
-  setupTableFolding: function() {
+  setupFoldingIn: function(node) {
     var self = this;
-    for (var i=0; i < this.results.length; i++) {
-      var file = this.results[i];
-      var hdr = file.getElementsByTagName('thead')[0];
-      hdr.addEventListener('click', function() {
-        var node = this.parentNode; 
-        if(node.tagName.toLowerCase() == 'table') {
-          self.toggleMatchesIn(node);
-        }
-      }, false);
-    }
+    var hdr = node.getElementsByTagName('thead')[0];
+    hdr.addEventListener('click', function() {
+      var parent = this.parentNode;
+      if(parent.tagName.toLowerCase() == 'table') {
+        self.toggleMatchesIn(parent);
+      }
+    }, false);
   },
   
   toggleMatchesIn: function(table) {

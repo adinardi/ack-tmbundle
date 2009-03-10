@@ -25,8 +25,8 @@ class AckInProject::SearchResults
     puts <<-HTML
       <h2>Searching for “#{ h search_string }” in #{ searched_in }#{note}</h2>
       <div id="counters"><span id="linecount">0 lines</span> matched in <span id="filecount">0 files</span></div>
-      <script type="text/javascript">searchStarted();</script>
       <div id="fold" style="display:none"><input type="checkbox" id="fold-toggle" /><span id="fold-lbl">Fold Results</span></div>
+      <script type="text/javascript">searchStarted();</script>
     HTML
 
     AckInProject::Search.new(plist).search
