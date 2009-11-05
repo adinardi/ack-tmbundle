@@ -6,14 +6,14 @@
 	<dict>
 		<key>items</key>
 		<array>
-			<string>E1966FE3-4B65-419A-85CA-4447BC63ECAD</string>
+			<string>E1966FE3-4B65-419A-85CA-4447BC63ECAE</string>
 		</array>
 		<key>submenus</key>
 		<dict/>
 	</dict>
 	<key>name</key>
-	<string>Ack In Project</string>
+	<string>Better Ack In Project</string>
 	<key>uuid</key>
-	<string>E3C2D3AD-8AAB-4CE6-87CE-47997F5D950C</string>
+	<string>E3C2D3AD-8AAB-4CE6-87CE-47997F5D950D</string>
 </dict>
 </plist>
